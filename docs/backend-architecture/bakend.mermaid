@@ -1,0 +1,39 @@
+flowchart TD
+ subgraph subGraph0["Usuário Externo (Scan)"]
+        B("GET /r/aB3xY")
+        A["Scan do QR Code"]
+  end
+ subgraph subGraph1["Usuário Interno (Admin)"]
+        D("POST /graphql")
+        C["Dashboard Qraft"]
+  end
+ subgraph subGraph2["Lógica de Negócio (Admin)"]
+        H["1 Auth Middleware"]
+        G["Serviço da API Principal GraphQL"]
+        I["2 Resolvers GraphQL"]
+        J["3 Camada de Serviços"]
+        K["Database PostgreSQL"]
+        L["Serviço de Geração de Imagem"]
+  end
+ subgraph subGraph3["Lógica de Redirecionamento (Público)"]
+        F["Serviço de Redirecionamento REST"]
+  end
+ subgraph subGraph4["Infraestrutura Backend (Qraft API Simplificada)"]
+        E{"Roteador de API"}
+        subGraph2
+        subGraph3
+  end
+    A --> B
+    C --> D
+    B --> E
+    D --> E
+    E --> F & G
+    G --> H
+    H --> I
+    I --> J
+    J --> K & L
+    F --> K
+
+    style G fill:#BBDEFB,stroke:#333,color:#000000
+    style F fill:#FF6D00,stroke:#333,color:#000000
+

@@ -1,0 +1,53 @@
+%% Diagrama de Entidade-Relacionamento
+erDiagram
+    User {
+        string id PK "UUID"
+        string email UK "Indexado, Único"
+        string password_hash
+        string name
+        datetime created_at
+        datetime updated_at
+    }
+
+    Organization {
+        string id PK "UUID"
+        string name
+        datetime created_at
+        datetime updated_at
+    }
+
+    UserOrganization {
+        string user_id PK, FK "Ref: User.id"
+        string organization_id PK, FK "Ref: Organization.id"
+        string role "ex: 'admin', 'member'"
+    }
+
+    QrCode {
+        string id PK "UUID"
+        string organization_id FK "Ref: Organization.id"
+        string owner_id FK "Ref: User.id"
+        string name "Nome amigável (ex: 'Link do Site')"
+        string destination_url "A URL de destino final"
+        string short_code UK "Indexado, Único (ex: 'aB3xY')"
+        string type "ex: 'static', 'dynamic'"
+        datetime created_at
+        datetime updated_at
+    }
+
+    Scan {
+        string id PK "UUID"
+        string qr_code_id FK "Ref: QrCode.id"
+        datetime scanned_at
+        string ip_hash "IP anonimizado (LGPD)"
+        string user_agent
+        string country "Derivado do IP"
+        string city "Derivado do IP"
+    }
+
+    User ||--o{ UserOrganization : "participa em"
+    Organization ||--o{ UserOrganization : "contém"
+    
+    Organization ||--|{ QrCode : "possui"
+    User ||--|{ QrCode : "criou"
+    
+    QrCode ||--|{ Scan : "registra"    
