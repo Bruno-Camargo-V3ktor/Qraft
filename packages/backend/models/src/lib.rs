@@ -19,3 +19,15 @@ pub struct Organization {
     pub created_at: DateTime<Utc>,
     pub updated_at: DateTime<Utc>,
 }
+
+#[derive(Serialize, Deserialize)]
+pub enum UserRole {
+    Admin,
+    Member,
+}
+
+#[derive(Serialize, Deserialize)]
+pub enum QrCodeType {
+    Static,
+    Dynamic,
+}
