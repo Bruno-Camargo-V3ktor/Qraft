@@ -34,6 +34,17 @@ pub struct QrCode {
 }
 
 #[derive(Serialize, Deserialize)]
+pub struct Scan {
+    pub id: Uuid,
+    pub qrcode_id: Uuid,
+    pub scanned_at: DateTime<Utc>,
+    pub ip_hash: String,
+    pub user_agent: String,
+    pub country: String,
+    pub city: String,
+}
+
+#[derive(Serialize, Deserialize)]
 pub enum UserRole {
     Admin,
     Member,
