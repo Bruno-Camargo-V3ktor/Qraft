@@ -21,6 +21,19 @@ pub struct Organization {
 }
 
 #[derive(Serialize, Deserialize)]
+pub struct QrCode {
+    pub id: Uuid,
+    pub organization_id: Uuid,
+    pub owner_id: Uuid,
+    pub name: String,
+    pub destination_url: String,
+    pub short_code: String,
+    pub code_type: QrCodeType,
+    pub created_at: DateTime<Utc>,
+    pub updated_at: DateTime<Utc>,
+}
+
+#[derive(Serialize, Deserialize)]
 pub enum UserRole {
     Admin,
     Member,
